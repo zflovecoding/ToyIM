@@ -43,6 +43,7 @@ public class QQServer {
 
 
                 }else {//login failed
+                    System.out.println("用户 id=" + u.getUserID() + " pwd=" + u.getPasswd() + " 验证失败");
                     msg.setMsgType(MessageType.MESSAGE_LOGIN_FAILED);
                     oos.writeObject(msg);//return message
                     //login failed ,shutdown the socket

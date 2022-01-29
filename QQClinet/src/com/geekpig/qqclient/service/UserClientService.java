@@ -1,7 +1,6 @@
 package com.geekpig.qqclient.service;
 
 
-
 import com.geekpig.qqcommon.Message;
 import com.geekpig.qqcommon.MessageType;
 import com.geekpig.qqcommon.User;
@@ -21,12 +20,13 @@ public class UserClientService {
          boolean b = false;
          u.setUserID(userID);
          u.setPasswd(pwd);
+         User user = new User(userID, pwd);
          //user will be transmitted to QQServer
          try {
              //write user to server
              socket = new Socket(InetAddress.getByName("127.0.0.1"),9999);
              ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
-             oos.writeObject(u);
+             oos.writeObject(user);
 
              //read message from server
 
@@ -36,7 +36,8 @@ public class UserClientService {
              if(msg.getMsgType().equals(MessageType.MESSAGE_LOGIN_SUCCEED)){
 
                  //Create a thread that communicates with the server
-                 ClientConnectServerThread clientConnectServerThread = new ClientConnectServerThread(socket);
+                 ClientConnectServerThread clientConnectServerThread =
+                         new ClientConnectServerThread(socket);
                  //start up the thread
                  clientConnectServerThread.start();
                  //add this thread to ManageClientConnectServerThread
