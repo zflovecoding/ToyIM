@@ -7,30 +7,30 @@ import java.io.Serializable;
 public class User implements Serializable {
     //to ensure the compatibility,define a serialVersionUID
     private static final long serialVersionUID = 1L;
-    private int userID;
-    private int passwd;
+    private String userID;
+    private String passwd;
 
     public User() {
     }
 
-    public User(int userID, int passwd) {
+    public User(String userID, String passwd) {
         this.userID = userID;
         this.passwd = passwd;
     }
 
-    public int getUserID() {
+    public String getUserID() {
         return userID;
     }
 
-    public void setUserID(int userID) {
+    public void setUserID(String userID) {
         this.userID = userID;
     }
 
-    public int getPasswd() {
+    public String getPasswd() {
         return passwd;
     }
 
-    public void setPasswd(int passwd) {
+    public void setPasswd(String passwd) {
         this.passwd = passwd;
     }
 }
