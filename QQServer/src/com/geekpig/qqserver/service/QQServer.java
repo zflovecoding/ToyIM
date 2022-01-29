@@ -9,15 +9,39 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.HashMap;
 
 //connect client
 public class QQServer {
     private ServerSocket ss = null;
-
+    private static HashMap<String,User> validUsers  = new HashMap<>();
+    //set hashmap static ,then can initialize it in static code block
+    static {
+        validUsers.put("233",new User("233","233233"));
+        validUsers.put("rust",new User("rust","rustisfuture"));
+        validUsers.put("go",new User("go","gogogo"));
+        validUsers.put("大灰狼",new User("大灰狼","lovegxx"));
+        validUsers.put("白团",new User("白团","baibaibai"));
+        validUsers.put("黑团",new User("黑团","heiheihei"));
+        validUsers.put("小白兔",new User("小白兔","lovegxx"));
+        validUsers.put("鼠子",new User("鼠子","diedie"));
+    }
+    public boolean checkUser(String userID,String pwd){
+        boolean b = true;
+        User user = validUsers.get(userID);
+        if(user == null){
+            b = false;
+        }else if(!(user.getPasswd().equals(pwd))){
+            b = false;
+        }
+        return b;
+    }
     public QQServer(){
         try {
             System.out.println("服务端在9999端口监听...");
             ss = new ServerSocket(9999);
+
+
             //When connected to a client,
             // it will continue to listen, so use while loop
             while(true){
@@ -30,7 +54,7 @@ public class QQServer {
                 User u = (User)ois.readObject();
                 //new message object ,ready to reply client
                 Message msg = new Message();
-                if(u.getUserID().equals("100") && u.getPasswd().equals("123456")){
+                if(checkUser(u.getUserID(),u.getPasswd())){
                     msg.setMsgType(MessageType.MESSAGE_LOGIN_SUCCEED);
                     //msg object reply client
                     oos.writeObject(msg);
