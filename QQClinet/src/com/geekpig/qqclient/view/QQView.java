@@ -1,16 +1,19 @@
 package com.geekpig.qqclient.view;
 
 
+import com.geekpig.qqclient.service.UserClientService;
 import com.geekpig.qqclient.utils.Utility;
 
 //the client menu interface
 public class QQView {
+
     private boolean loop = true;
     private String key;
-
+    private UserClientService userClientService;
 
     public static void main(String[] args) {
         new QQView().mainMenu();
+        System.out.println("客户端退出系统.....");
     }
     public  void mainMenu(){
         while (loop){
@@ -24,17 +27,17 @@ public class QQView {
 
                     //login need userID and pwd
                     System.out.print("请输入用户号: ");
-                    String userId = Utility.readString(50);
+                    String userID = Utility.readString(50);
                     System.out.print("请输入密  码: ");
                     String pwd = Utility.readString(50);
                     //这里就比较麻烦了, 需要到服务端去验证该用户是否合法
                     //这里有很多代码, 我们这里编写一个类 UserClientService[用户登录/注册]
-                    if(false){
-                        System.out.println("===========欢迎 (用户 " + userId + " 登录成功) ===========");
+                    if(userClientService.checkUser(userID,pwd)){
+                        System.out.println("===========欢迎 (用户 " + userID + " 登录成功) ===========");
                         //user login succeed
                         //show secondary menu
                         while (loop) {
-                            System.out.println("\n=========网络通信系统二级菜单(用户 " + userId + " )=======");
+                            System.out.println("\n=========网络通信系统二级菜单(用户 " + userID + " )=======");
                             System.out.println("\t\t 1 显示在线用户列表");
                             System.out.println("\t\t 2 群发消息");
                             System.out.println("\t\t 3 私聊消息");
