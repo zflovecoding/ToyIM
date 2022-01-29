@@ -42,14 +42,25 @@ public class QQServer {
 
 
 
-                }else {
+                }else {//login failed
                     msg.setMsgType(MessageType.MESSAGE_LOGIN_FAILED);
-                    oos.writeObject(msg);
+                    oos.writeObject(msg);//return message
+                    //login failed ,shutdown the socket
+                    socket.close();
                 }
             }
 
         } catch (Exception e) {
             e.printStackTrace();
+        }finally {
+            //If the server exits while,
+            // it means that the server is not listening,
+            // so close the ServerSocket
+            try {
+                ss.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
 
