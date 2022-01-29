@@ -20,13 +20,13 @@ public class UserClientService {
          boolean b = false;
          u.setUserID(userID);
          u.setPasswd(pwd);
-         User user = new User(userID, pwd);
+         //User user = new User(userID, pwd);
          //user will be transmitted to QQServer
          try {
              //write user to server
              socket = new Socket(InetAddress.getByName("127.0.0.1"),9999);
              ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
-             oos.writeObject(user);
+             oos.writeObject(u);
 
              //read message from server
 

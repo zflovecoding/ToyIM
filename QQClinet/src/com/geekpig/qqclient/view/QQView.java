@@ -9,7 +9,9 @@ public class QQView {
 
     private boolean loop = true;
     private String key;
-    private UserClientService userClientService;
+    //NOTICE:here userClientService must be instantiated,OR ! There will be a NullPointerException when call a method in it
+    
+    private UserClientService userClientService = new UserClientService();
 
     public static void main(String[] args) {
         new QQView().mainMenu();
