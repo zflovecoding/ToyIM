@@ -21,7 +21,7 @@ public class QQServer {
     //set hashmap static ,then can initialize it in static code block
     static {
         validUsers.put("233",new User("233","233233"));
-        validUsers.put("rust",new User("rust","rustisfuture"));
+        validUsers.put("rust",new User("rust","rustup"));
         validUsers.put("go",new User("go","gogogo"));
         validUsers.put("大灰狼",new User("大灰狼","lovegxx"));
         validUsers.put("白团",new User("白团","baibaibai"));
