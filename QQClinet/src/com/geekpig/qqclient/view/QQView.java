@@ -62,6 +62,9 @@ public class QQView {
                                     System.out.println("发送文件");
                                     break;
                                 case "9":
+                                    //call a method which can send message(Type:EXIT) to server
+                                    // for close corresponding socket
+                                    userClientService.logout();
                                     loop = false;
                                     break;
                             }

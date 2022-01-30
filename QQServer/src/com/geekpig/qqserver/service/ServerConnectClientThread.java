@@ -40,6 +40,17 @@ public class ServerConnectClientThread extends Thread{
                    message.setContent(allOnlineUsers);
                    //transmit message back
                    oos.writeObject(message);
+               }else if(msg.getMsgType().equals(MessageType.MESSAGE_CLIENT_EXIT)){
+                   System.out.println(msg.getSender() + " 退出");
+                   //client send a message to close socket ,and terminate the thread(drop the loop)
+                   //find the socket corresponding the userID
+                   String userID  = msg.getSender();
+                   //remove the thread from the collection
+                   ManageServerConnectClientThread.removeServerConnectClientThread(userID);
+                   //shutdown the socket , there exists many "ServerConnectClientThread",many "socket"
+                   //here, the socket is just in this thread ,in this communication
+                   socket.close();
+                   break;//jump out the loop ,kill the thread
                }
 
 

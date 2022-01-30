@@ -12,7 +12,10 @@ public class ManageServerConnectClientThread {
     public static ServerConnectClientThread getServerConnectClientThread(String userID){
         return hm.get(userID);
     }
-
+    //remove a thread object from hashmap
+    public static void  removeServerConnectClientThread(String userID){
+        hm.remove(userID);
+    }
 
     //traverse the hashmap,get all online users
     public static String getAllOnlineUsers(){

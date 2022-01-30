@@ -15,8 +15,8 @@ public class UserClientService {
     // so make them member properties
      private User u = new User();
      private Socket socket;
-    //checkUser() will verify user in the server
 
+    //checkUser() will verify user in the server
      public boolean checkUser(String userID,String pwd){
          boolean b = false;
          u.setUserID(userID);
@@ -57,6 +57,7 @@ public class UserClientService {
          return b;
 
      }
+     //pull all online users
      public void pullOnlineUserList(){
          Message message = new Message();
          message.setMsgType(MessageType.MESSAGE_GET_ONLINE_FRIEND);
@@ -84,6 +85,27 @@ public class UserClientService {
 
 
      }
+     //log out client , send EXIT message to Server
+    public void logout(){
+         //send message to server to close the socket
+        Message message = new Message();
+        message.setMsgType(MessageType.MESSAGE_CLIENT_EXIT);
+        message.setSender(u.getUserID()); //specify the sender of message to ensure which thread need be terminated
+        try {
 
+            ClientConnectServerThread clientConnectServerThread = ManageClientConnectServerThread.getClientConnectServerThread(u.getUserID());
+            Socket socket = clientConnectServerThread.getSocket();
+            ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+            oos.writeObject(message);
+            //exit the client
+            System.out.println(u.getUserID() + " 退出系统 ");
+            System.exit(0);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+
+    }
 
 }
