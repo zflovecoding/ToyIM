@@ -10,11 +10,14 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 //connect client
 public class QQServer {
     private ServerSocket ss = null;
-    private static HashMap<String,User> validUsers  = new HashMap<>();
+    //hashmap is unsafe in multi-thread mode
+    //Concurrent is safe to handle Concurrency Situation
+    private static ConcurrentHashMap<String,User> validUsers  = new ConcurrentHashMap<>();
     //set hashmap static ,then can initialize it in static code block
     static {
         validUsers.put("233",new User("233","233233"));
@@ -36,11 +39,11 @@ public class QQServer {
         }
         return b;
     }
+    //the constructor
     public QQServer(){
         try {
             System.out.println("服务端在9999端口监听...");
             ss = new ServerSocket(9999);
-
 
             //When connected to a client,
             // it will continue to listen, so use while loop
@@ -63,8 +66,6 @@ public class QQServer {
                     serverConnectClientThread.start();
                     //add to ManageServerConnectClientThread
                     ManageServerConnectClientThread.addServerConnectClientThread(u.getUserID(),serverConnectClientThread);
-
-
 
                 }else {//login failed
                     System.out.println("用户 id=" + u.getUserID() + " pwd=" + u.getPasswd() + " 验证失败");

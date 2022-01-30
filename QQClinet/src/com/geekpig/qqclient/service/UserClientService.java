@@ -9,9 +9,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
-//this class used to handle user login and sign up
+//this class used to handle user login and sign up...and so on
 public class UserClientService {
-    //Because we may use user information in other places, so make member properties
+    //Because we may use user information in other places,
+    // so make them member properties
      private User u = new User();
      private Socket socket;
     //checkUser() will verify user in the server
@@ -54,6 +55,33 @@ public class UserClientService {
              e.printStackTrace();
          }
          return b;
+
+     }
+     public void pullOnlineUserList(){
+         Message message = new Message();
+         message.setMsgType(MessageType.MESSAGE_GET_ONLINE_FRIEND);
+         message.setSender(u.getUserID());
+         try {
+             //transmit to Server
+             //now the socket is not instantiated,wo need to get the socket
+             //first get the thread controls that socket form the class manage thread
+             //Get the thread object corresponding to userID
+             ClientConnectServerThread clientConnectServerThread = ManageClientConnectServerThread.getClientConnectServerThread(u.getUserID());
+             //by the thread ,get the socket
+             Socket socket = clientConnectServerThread.getSocket();
+             //use socket get the Output Stream ,to write Object to Server
+             ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+             //send message successfully
+             oos.writeObject(message);
+
+
+
+
+
+         } catch (IOException e) {
+             e.printStackTrace();
+         }
+
 
      }
 
