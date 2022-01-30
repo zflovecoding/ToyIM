@@ -37,6 +37,8 @@ public class ClientConnectServerThread extends  Thread{
                 }else if(msg.getMsgType().equals(MessageType.MESSAGE_COMM_MES)){
                     System.out.println("\n" + msg.getSender()
                             + " 对 " + msg.getGetter() + " 说: " + msg.getContent());
+                }else if(msg.getMsgType().equals(MessageType.MESSAGE_TO_ALL_MES)){
+                    System.out.println("\n" + msg.getSender() + " 对大家说: " + msg.getContent());
                 }
                 else{
                     //doesn't get the return message for pulling user list

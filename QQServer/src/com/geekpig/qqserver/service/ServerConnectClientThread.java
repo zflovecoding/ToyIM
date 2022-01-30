@@ -6,6 +6,8 @@ import com.geekpig.qqcommon.MessageType;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.HashMap;
+import java.util.Iterator;
 
 public class ServerConnectClientThread extends Thread{
     private Socket socket = null;
@@ -53,6 +55,20 @@ public class ServerConnectClientThread extends Thread{
                    ServerConnectClientThread serverConnectClientThread = ManageServerConnectClientThread.getServerConnectClientThread(msg.getGetter());
                    ObjectOutputStream oos = new ObjectOutputStream(serverConnectClientThread.getSocket().getOutputStream());
                    oos.writeObject(msg);
+
+               }else if(msg.getMsgType().equals(MessageType.MESSAGE_TO_ALL_MES)){
+
+                   //sent the message to all the socket except itself
+                   HashMap<String, ServerConnectClientThread> allThread = ManageServerConnectClientThread.getAllThread();
+                   Iterator<String> iterator = allThread.keySet().iterator();
+                   while(iterator.hasNext()){
+                       String onlineUsers = iterator.next().toString();
+                       if(!onlineUsers.equals(msg.getSender())){
+                           ObjectOutputStream oos =new ObjectOutputStream(allThread.get(onlineUsers).getSocket().getOutputStream());
+                           oos.writeObject(msg);
+                       }
+                   }
+
 
 
                }

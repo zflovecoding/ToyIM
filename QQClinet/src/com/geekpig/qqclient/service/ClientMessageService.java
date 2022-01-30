@@ -9,7 +9,22 @@ import java.util.Date;
 
 //this class used to handle client message related things
 public class ClientMessageService {
-    //message service class must hold a socket to write output stream
+    public void sendMessageToAll(String content,String sender){
+        Message message = new Message();
+        message.setMsgType(MessageType.MESSAGE_TO_ALL_MES);
+        message.setSender(sender);
+        message.setContent(content);
+        message.setSendTime(new Date().toString());//发送时间设置到message对象
+        System.out.println(sender + " 对大家说 " + content);
+        try {
+            ObjectOutputStream oos = new ObjectOutputStream(
+                    ManageClientConnectServerThread.getClientConnectServerThread(sender)
+                    .getSocket().getOutputStream());
+            oos.writeObject(message);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
     public void sendPrivateMessage(String content, String sender, String getter){

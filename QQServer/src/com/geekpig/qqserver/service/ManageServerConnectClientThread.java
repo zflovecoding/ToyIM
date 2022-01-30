@@ -5,7 +5,9 @@ import java.util.Iterator;
 
 public class ManageServerConnectClientThread {
     private static  HashMap<String ,ServerConnectClientThread> hm = new HashMap<>();
-
+    public static HashMap<String,ServerConnectClientThread> getAllThread(){
+        return hm;
+    }
     public static void addServerConnectClientThread(String userID,ServerConnectClientThread scct){
         hm.put(userID,scct);
     }
@@ -28,5 +30,7 @@ public class ManageServerConnectClientThread {
         }
         return onlineUserList;
     }
+
+
 
 }
