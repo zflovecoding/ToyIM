@@ -16,7 +16,7 @@ public class UserClientService {
      private User u = new User();
      private Socket socket;
 
-    //checkUser() will verify user in the server
+     //checkUser() will verify user in the server
      public boolean checkUser(String userID,String pwd){
          boolean b = false;
          u.setUserID(userID);

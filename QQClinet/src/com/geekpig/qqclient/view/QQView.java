@@ -1,6 +1,7 @@
 package com.geekpig.qqclient.view;
 
 
+import com.geekpig.qqclient.service.ClientMessageService;
 import com.geekpig.qqclient.service.UserClientService;
 import com.geekpig.qqclient.utils.Utility;
 
@@ -10,9 +11,11 @@ public class QQView {
     private boolean loop = true;
     private String key;
     //NOTICE:here userClientService must be instantiated,OR ! There will be a NullPointerException when call a method in it
-
     private UserClientService userClientService = new UserClientService();
+    //handle message service
+    private ClientMessageService clientMessageService = new ClientMessageService();
 
+   // private ClientMessageService clientMessageService = new ClientMessageService();
     public static void main(String[] args) {
         new QQView().mainMenu();
         System.out.println("客户端退出系统.....");
@@ -56,7 +59,12 @@ public class QQView {
                                     System.out.println("群发消息");
                                     break;
                                 case "3":
-                                    System.out.println("私聊消息");
+                                    System.out.print("请输入想聊天的用户号(在线): ");
+                                    String getterId = Utility.readString(50);
+                                    System.out.print("请输入想说的话: ");
+                                    String content = Utility.readString(100);
+                                    //write a method to send message
+                                    clientMessageService.sendPrivateMessage(content,userID,getterId);
                                     break;
                                 case "4":
                                     System.out.println("发送文件");
@@ -69,10 +77,6 @@ public class QQView {
                                     break;
                             }
                         }
-
-
-
-
                     }else{
                         System.out.println("=========登录失败=========");
 

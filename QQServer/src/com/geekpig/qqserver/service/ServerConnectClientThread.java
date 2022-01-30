@@ -14,6 +14,11 @@ public class ServerConnectClientThread extends Thread{
        this.socket = socket;
        this.userID = userID;
     }
+
+    public Socket getSocket() {
+        return socket;
+    }
+
     @Override
     public void run(){
        while(true){//here,this thread is in the run status,used to receive/send message
@@ -21,7 +26,7 @@ public class ServerConnectClientThread extends Thread{
                System.out.println("服务端和客户端" + userID + " 保持通信，读取数据...");
                //new ObjectOutputStream(socket.getOutputStream())
                ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
-               ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+             //  ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
                Message msg =(Message) ois.readObject();
                //The message will be used later,
                // and the corresponding business processing
@@ -38,9 +43,20 @@ public class ServerConnectClientThread extends Thread{
                    message.setMsgType(MessageType.MESSAGE_RET_ONLINE_FRIEND);
                    message.setGetter(msg.getSender());
                    message.setContent(allOnlineUsers);
+                   ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
                    //transmit message back
                    oos.writeObject(message);
-               }else if(msg.getMsgType().equals(MessageType.MESSAGE_CLIENT_EXIT)){
+               }else if(msg.getMsgType().equals(MessageType.MESSAGE_COMM_MES)){
+                   //what should i do here , transmit this message to the specified client
+                   //use the corresponding socket
+                   //write to the dest client
+                   ServerConnectClientThread serverConnectClientThread = ManageServerConnectClientThread.getServerConnectClientThread(msg.getGetter());
+                   ObjectOutputStream oos = new ObjectOutputStream(serverConnectClientThread.getSocket().getOutputStream());
+                   oos.writeObject(msg);
+
+
+               }
+               else if(msg.getMsgType().equals(MessageType.MESSAGE_CLIENT_EXIT)){
                    System.out.println(msg.getSender() + " 退出");
                    //client send a message to close socket ,and terminate the thread(drop the loop)
                    //find the socket corresponding the userID
