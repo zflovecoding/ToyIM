@@ -8,8 +8,6 @@
 
 - User login
 
-![ideas](https://gitee.com/geekpig/my-blog-images/raw/master/img/image-20220129100016664.png)
- 
  - Users pull online user list
 
  - Private chat
@@ -26,9 +24,10 @@
 ## Konwledge involved
 
 - Object-Oriented Programming
-
 - Multi-Thread in java
-
 - IOStream Processing
-
 - Network Programming
+
+## Main idea
+
+![mainideas](https://gitee.com/geekpig/my-blog-images/raw/master/img/image-20220201183532677.png)
