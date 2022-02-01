@@ -4,6 +4,7 @@ import com.geekpig.qqcommon.Message;
 import com.geekpig.qqcommon.MessageType;
 
 import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.HashMap;
@@ -68,8 +69,10 @@ public class ServerConnectClientThread extends Thread{
                            oos.writeObject(msg);
                        }
                    }
-
-
+               }else if(msg.getMsgType().equals(MessageType.MESSAGE_FILE_MES)){
+                   //get message and forward(转发)  to message getter
+                   ObjectOutputStream oos = new ObjectOutputStream(ManageServerConnectClientThread.getServerConnectClientThread(msg.getGetter()).getSocket().getOutputStream());
+                   oos.writeObject(msg);
 
                }
                else if(msg.getMsgType().equals(MessageType.MESSAGE_CLIENT_EXIT)){

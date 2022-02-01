@@ -1,6 +1,7 @@
 package com.geekpig.qqclient.view;
 
 
+import com.geekpig.qqclient.service.ClientFileService;
 import com.geekpig.qqclient.service.ClientMessageService;
 import com.geekpig.qqclient.service.UserClientService;
 import com.geekpig.qqclient.utils.Utility;
@@ -14,7 +15,7 @@ public class QQView {
     private UserClientService userClientService = new UserClientService();
     //handle message service
     private ClientMessageService clientMessageService = new ClientMessageService();
-
+    private ClientFileService clientFileService = new ClientFileService();
    // private ClientMessageService clientMessageService = new ClientMessageService();
     public static void main(String[] args) {
         new QQView().mainMenu();
@@ -58,7 +59,7 @@ public class QQView {
                                 case "2":
                                     System.out.println("请输入想对大家说的话: ");
                                     String s = Utility.readString(100);
-                                   clientMessageService.sendMessageToAll(s,userID);
+                                    clientMessageService.sendMessageToAll(s,userID);
                                     break;
                                 case "3":
                                     System.out.print("请输入想聊天的用户号(在线): ");
@@ -69,7 +70,13 @@ public class QQView {
                                     clientMessageService.sendPrivateMessage(content,userID,getterId);
                                     break;
                                 case "4":
-                                    System.out.println("发送文件");
+                                    System.out.print("请输入你想把文件发送给的用户(在线用户): ");
+                                    getterId = Utility.readString(50);
+                                    System.out.print("请输入发送文件的路径(形式 d:\\xx.jpg)");
+                                    String src = Utility.readString(100);
+                                    System.out.print("请输入把文件发送到对应的路径(形式 d:\\yy.jpg)");
+                                    String dest = Utility.readString(100);
+                                    clientFileService.sendPrivateFile(src,dest,userID,getterId);
                                     break;
                                 case "9":
                                     //call a method which can send message(Type:EXIT) to server

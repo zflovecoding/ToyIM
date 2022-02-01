@@ -3,6 +3,7 @@ package com.geekpig.qqclient.service;
 import com.geekpig.qqcommon.Message;
 import com.geekpig.qqcommon.MessageType;
 
+import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.net.Socket;
 
@@ -19,7 +20,6 @@ public class ClientConnectServerThread extends  Thread{
         //continuously  communicate
         while (true){
             try {
-
                 System.out.println("客户端线程，等待读取从服务器端发送的消息");
                 ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
                 Message msg = (Message) ois.readObject();
@@ -39,6 +39,16 @@ public class ClientConnectServerThread extends  Thread{
                             + " 对 " + msg.getGetter() + " 说: " + msg.getContent());
                 }else if(msg.getMsgType().equals(MessageType.MESSAGE_TO_ALL_MES)){
                     System.out.println("\n" + msg.getSender() + " 对大家说: " + msg.getContent());
+                }else if(msg.getMsgType().equals(MessageType.MESSAGE_FILE_MES)){
+                    System.out.println("\n" + msg.getSender() + " 给 " + msg.getGetter()
+                            + " 发文件: " + msg.getSrc() + " 到我的电脑的目录 " + msg.getDest());
+
+                    //get the message , write file to dest
+                    FileOutputStream fileOutputStream = new FileOutputStream(msg.getDest());
+                    fileOutputStream.write(msg.getBytes());
+
+                    fileOutputStream.close();
+                    System.out.println("\n 保存文件成功~");
                 }
                 else{
                     //doesn't get the return message for pulling user list
