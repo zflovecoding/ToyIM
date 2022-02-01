@@ -8,10 +8,27 @@
 
 - User login
 
-![image-20220129100016664](https://gitee.com/geekpig/my-blog-images/raw/master/img/image-20220129100016664.png)
+![ideas](https://gitee.com/geekpig/my-blog-images/raw/master/img/image-20220129100016664.png)
+ 
+ - Users pull online user list
 
-思路：
+ - Private chat
 
-先编写qqcommon公有类
+ - Group chat
 
-socket - - - - connected 
+ - Send File to online users
+
+ - Server push news
+
+ - Quit system
+
+
+## Konwledge involved
+
+- Object-Oriented Programming
+
+- Multi-Thread in java
+
+- IOStream Processing
+
+- Network Programming
