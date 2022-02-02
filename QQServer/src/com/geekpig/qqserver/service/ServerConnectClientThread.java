@@ -54,8 +54,15 @@ public class ServerConnectClientThread extends Thread{
                    //use the corresponding socket
                    //write to the dest client
                    ServerConnectClientThread serverConnectClientThread = ManageServerConnectClientThread.getServerConnectClientThread(msg.getGetter());
-                   ObjectOutputStream oos = new ObjectOutputStream(serverConnectClientThread.getSocket().getOutputStream());
-                   oos.writeObject(msg);
+                   if(serverConnectClientThread==null){
+                       //shows that this user is offline
+                       //Temporarily save the message to the server
+                       QQServer.addOfflineMessage(msg.getGetter(),msg);
+                   }else{
+                       ObjectOutputStream oos = new ObjectOutputStream(serverConnectClientThread.getSocket().getOutputStream());
+                       oos.writeObject(msg);
+                   }
+
 
                }else if(msg.getMsgType().equals(MessageType.MESSAGE_TO_ALL_MES)){
 
@@ -70,9 +77,18 @@ public class ServerConnectClientThread extends Thread{
                        }
                    }
                }else if(msg.getMsgType().equals(MessageType.MESSAGE_FILE_MES)){
-                   //get message and forward(转发)  to message getter
-                   ObjectOutputStream oos = new ObjectOutputStream(ManageServerConnectClientThread.getServerConnectClientThread(msg.getGetter()).getSocket().getOutputStream());
-                   oos.writeObject(msg);
+
+                   ServerConnectClientThread serverConnectClientThread = ManageServerConnectClientThread.getServerConnectClientThread(msg.getGetter());
+                   if(serverConnectClientThread == null){
+                       //shows that this user is offline
+                       //Temporarily save the message to the server
+                       QQServer.addOfflineMessage(msg.getGetter(),msg);
+                   }else{
+                       //get message and forward(转发)  to message getter
+                       ObjectOutputStream oos = new ObjectOutputStream(serverConnectClientThread.getSocket().getOutputStream());
+                       oos.writeObject(msg);
+                   }
+
 
                }
                else if(msg.getMsgType().equals(MessageType.MESSAGE_CLIENT_EXIT)){

@@ -28,6 +28,12 @@
 - IOStream Processing
 - Network Programming
 
+## Extensions
+
+- Users can receive offline messages and files
+### idea
+
+
 ## Main idea
 
 ![mainideas](https://gitee.com/geekpig/my-blog-images/raw/master/img/image-20220201183532677.png)
